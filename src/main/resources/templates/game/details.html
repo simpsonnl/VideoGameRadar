@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('explore')">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+
+
+<div th:replace="layout :: nav"></div>
+
+
+
+<div class="game-container">
+    <div class="row">
+        <div class="detail-col">
+
+        <img th:src="@{|/games/${game.id}|}" alt="png" height="400" width="275"/>
+        </div>
+        <div class="detail-col">
+            <div><h1 th:text="${game.name}"></h1></div>
+            <div class="game-details">Release Date</div>
+            <div class="game-details" th:text="${game.genre.name}">Genre</div>
+            <div class="game-details">Link</div>
+            <div class="button-game-details">
+                <form th:action="@{${action}}" method="post">
+                    <button class="edit-button" type="submit">Edit</button>
+                </form>
+                <form th:action="@{${delete}}" method="post">
+                    <button th:onclick="return myFunction()" type="submit" class="edit-button">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+function myFunction() {
+  return confirm("Are you sure you want to delete this game?");
+}
+</script>
+
+<!--<div th:fragment="flash" th:if="${flash != null}" class="container">-->
+<!--    <i class="right material-icons" data-close="">close</i>-->
+<!--    <div th:classappend="${#strings.toLowerCase(flash.status)}" th:text="${flash.message}" class="flash"></div>-->
+<!--</div>-->
+
+
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('explore')">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+
+
+<div th:replace="layout :: nav"></div>
+
+
+
+<div class="game-container">
+    <div class="row">
+        <h1 th:text="${header}">All Games</h1>
+        <div th:each="game : ${games}" class="game">
+            <div class="col" >
+                <div>
+                <a th:href="@{|/details/${game.id}|}">
+                    <img th:src="@{|/games/${game.id}|}" alt="png" height="200" width="135"/>
+                    <div th:text="${game.name}" class="image-name">name</div>
+
+                </a>
+                <form th:action="@{|/games/favorite/${game.id}|}" method="post">
+                    <div><button type="submit" th:class="(${game.favorite}? 'un' : '') + 'favorite'"
+                    th:text="(${game.favorite}? 'Un-' : '') + 'Favorite'"></button></div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--<div th:fragment="flash" th:if="${flash != null}" class="container">-->
+<!--    <i class="right material-icons" data-close="">close</i>-->
+<!--    <div th:classappend="${#strings.toLowerCase(flash.status)}" th:text="${flash.message}" class="flash"></div>-->
+<!--</div>-->
+
+
+
+</body>
+</html>
