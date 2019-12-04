@@ -1,9 +1,12 @@
 package com.nicksimpson.VideoGameRadar.model;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.Date;
 
 
 @Entity
@@ -24,7 +27,8 @@ public class Game {
     @Column(nullable = false,columnDefinition = "boolean default true")
     private boolean favorite = false;
 
-    private LocalDateTime releaseDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date releaseDate;
 
     @ManyToOne
     private Genre genre;
@@ -49,11 +53,11 @@ public class Game {
         this.name = name;
     }
 
-    public LocalDateTime getReleaseDate() {
+    public Date getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(LocalDateTime releaseDate) {
+    public void setReleaseDate(Date releaseDate) {
         this.releaseDate = releaseDate;
     }
 
@@ -81,4 +85,59 @@ public class Game {
     public void setFavorite(boolean favorite) {
         this.favorite = favorite;
     }
+
+
+    public static Comparator<Game> GameNameComparatorAscending = new Comparator<Game>() {
+        @Override
+        public int compare(Game g1, Game g2) {
+            String gameName1 = g1.getName().toUpperCase();
+            String gameName2 = g2.getName().toUpperCase();
+
+
+            return gameName1.compareTo(gameName2);
+        }
+    };
+
+    public static Comparator<Game> GameNameComparatorDescending = new Comparator<Game>() {
+        @Override
+        public int compare(Game g1, Game g2) {
+            String gameName1 = g1.getName().toUpperCase();
+            String gameName2 = g2.getName().toUpperCase();
+
+
+            return gameName2.compareTo(gameName1);
+        }
+    };
+
+    public static Comparator<Game> GameReleaseDateComparatorOldest = new Comparator<Game>() {
+        @Override
+        public int compare(Game g1, Game g2) {
+            Date date1 = g1.getReleaseDate();
+            Date date2 = g2.getReleaseDate();
+
+            if(date1 == null){
+                return 1;
+            }else if (date2 == null){
+                return -1;
+            }
+            int i = date1.compareTo(date2);
+            return date1.compareTo(date2);
+        }
+    };
+
+    public static Comparator<Game> GameReleaseDateComparatorNewest = new Comparator<Game>() {
+        @Override
+        public int compare(Game g1, Game g2) {
+            Date date1 = g1.getReleaseDate();
+            Date date2 = g2.getReleaseDate();
+
+            if(date1 == null){
+                return -1;
+            }else if (date2 == null){
+                return 0;
+            }
+            return date2.compareTo(date1);
+        }
+    };
+
 }

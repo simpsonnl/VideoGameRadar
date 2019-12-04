@@ -5,6 +5,7 @@ import com.nicksimpson.VideoGameRadar.model.Genre;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -22,10 +23,7 @@ public class GenreServiceImpl implements GenreService{
         return genreDao.findById(id);
     }
 
-    @Override
-    public Genre findByName(String name) {
-        return genreDao.findByName(name);
-    }
+
 
     @Override
     public void save(Genre genre) {
@@ -36,6 +34,14 @@ public class GenreServiceImpl implements GenreService{
     public void delete(Genre genre) {
         genreDao.delete(genre);
     }
+
+    @Override
+    public void toggleFilter(Genre genre) {
+        genre.setFilterCheck(!genre.isFilterCheck());
+        genreDao.save(genre);
+    }
+
+
 
 
 }

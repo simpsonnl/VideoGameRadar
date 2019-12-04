@@ -56,14 +56,6 @@ public class GenreDaoImpl implements GenreDao{
         return genre;
     }
 
-    @Override
-    public Genre findByName(String name) {
-        Session session = sessionFactory.openSession();
-        Genre genre = session.get(Genre.class,name);
-        session.close();
-        return genre;
-    }
-
 
     @Override
     public void save(Genre genre) {

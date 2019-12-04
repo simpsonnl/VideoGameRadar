@@ -6,54 +6,47 @@
 
 
 <div th:replace="layout :: nav"></div>
+<div th:replace="layout :: flash"></div>
 
+<div class="content">
+    <div class="outer-grid-container">
+        <div class="heading-query">
+            <div class="header">
+                <h1 th:text="${heading}">All Games</h1>
+            </div>
+            <hr>
+        </div>
+        <div class="row">
+            <div class="upload-form">
+                <form class="uploadform" th:object="${game}" th:action="@{${action}}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" th:field="*{id}"/>
+                    <label for="name">Name</label>
+                    <input th:field="*{name}" id="name" type="text" placeholder="Name..."/>
+                    <div class="file-wrapper">
 
+                        <span class="placeholder" data-placeholder="Choose an image...">Choose an image...</span>
+                        <input class="input" type="file" id="file" name="file" th:data-placeholder="*{bytes}" />
+    <!--                    <label for="file" class="button">Browse</label>-->
+                    </div>
+                    <div>
+                        <select th:field="*{genre.id}" class="input">
+                            <option value="" disabled="disabled" selected="selected">Select a genre</option>
+                            <option th:each="genre : ${genres}" th:value="${genre.id}" th:text="${genre.name}">Action</option>
+                        </select>
+                    </div>
 
-<div class="upload-container">
-    <div id="heading">
-        <h2 th:text="${heading}">Upload</h2>
-        <div class="subtitle">Upload a new game.</div>
-    </div>
-    <div class="row">
-        <div class="upload-form">
-            <form class="uploadform" th:object="${game}" th:action="@{${action}}" method="post" enctype="multipart/form-data">
-                <input type="hidden" th:field="*{id}"/>
-                <label for="name">Name</label>
-                <input th:field="*{name}" id="name" type="text" placeholder="Name..."/>
-                <div class="file-wrapper">
-
-                    <span class="placeholder" data-placeholder="Choose an image...">Choose an image...</span>
-                    <input class="input" type="file" id="file" name="file" th:placeholder="${picture}" />
-<!--                    <label for="file" class="button">Browse</label>-->
-                </div>
-                <div>
-                    <select th:field="*{genre.id}" class="input">
-                        <option value="" disabled="disabled" selected="selected">Select a genre</option>
-                        <option th:each="genre : ${genres}" th:value="${genre.id}" th:text="${genre.name}">Action</option>
-                    </select>
-                </div>
-                <div>
-                    <button th:text="${submit}" type="submit" class="button">Submit</button>
-                </div>
-            </form>
+                    <div>
+                        <label for="releaseDate">Release Date:</label>
+                        <input type="date" class="input" name="releasedate" th:field="*{releaseDate}" id="releaseDate"/>
+                    </div>
+                    <div>
+                        <button th:text="${submit}" type="submit" class="button">Submit</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
-
-
-
-<!--<div th:fragment="flash" th:if="${flash != null}" class="container">-->
-<!--    <i class="right material-icons" data-close="">close</i>-->
-<!--    <div th:classappend="${#strings.toLowerCase(flash.status)}" th:text="${flash.message}" class="flash"></div>-->
-<!--</div>-->
-
-<!--<div th:fragment="scripts">-->
-<!--    <script th:src="@{/vendor/jquery/jquery-1.11.3.js}"></script>-->
-<!--    <script th:src="@{/vendor/materialize/js/materialize.js}"></script>-->
-<!--    <script th:src="@{/vendor/codrops/js/classie.js}"></script>-->
-<!--    <script th:src="@{/vendor/codrops/js/selectFx.js}"></script>-->
-<!--    <script th:src="@{/app.js}"></script>-->
-<!--</div>-->
 
 </body>
 </html>

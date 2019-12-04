@@ -7,36 +7,116 @@
 
 
 
-<div th:replace="layout :: nav"></div>
+<div th:replace="layout :: nav" class="menu"></div>
+<div th:replace="layout :: flash"></div>
 
 
+<div class="content">
+    <div class="outer-grid-container">
+        <div class="heading-query">
+            <div class="header">
+                <h1 th:text="${header}">All Games</h1>
+                <span class ="count" th:text="'(' + ${count} + ')'"></span>
+                <div class="sort-container" >
+                    <span>Sort By: </span>
+                    <form th:action="@{/sort}" name="sortForm" method="post">
+                        <select class="sort-box"
+                                name="sortOption" onchange="this.form.submit()">
+                            <option th:each="sort : ${sortOptions}" th:value="${sort.name}"
+                                    th:text="${sort.name}"
+                                    th:selected="${sort.name == sortOption}">
+                            </option>
+                        </select>
+                    </form>
+                </div>
 
-<div class="game-container">
-    <div class="row">
-        <h1 th:text="${header}">All Games</h1>
-        <div th:each="game : ${games}" class="game">
-            <div class="col" >
+            </div>
+
+            <hr>
+        </div>
+        <aside class="filters">
+            <div class="filters-wrapper-wrapper">
+                <div class="filters-wrapper">
+                <div class="filters-header">
+                    <div class="filters-title"><span>Filter Games</span>
+                    <div class="filter-clear-button">
+                        <form th:action="@{/filters/clear}" method="get">
+                            <button class="clear-button" type="submit">
+                                <span>Clear</span>
+                            </button>
+                        </form>
+                    </div>
+                    </div>
+                </div>
+
+            </div>
+            </div>
+            <div class="filters-wrapper-wrapper">
+                <div class="filters-wrapper">
+                <div class="filters-header">
+                    <div class="filters-title"><span>Genres</span></div>
+                </div>
                 <div>
-                <a th:href="@{|/details/${game.id}|}">
-                    <img th:src="@{|/games/${game.id}|}" alt="png" height="200" width="135"/>
-                    <div th:text="${game.name}" class="image-name">name</div>
 
-                </a>
-                <form th:action="@{|/games/favorite/${game.id}|}" method="post">
-                    <div><button type="submit" th:class="(${game.favorite}? 'un' : '') + 'favorite'"
-                    th:text="(${game.favorite}? 'Un-' : '') + 'Favorite'"></button></div>
-                </form>
+                    <ul class="filter-genre-ul" th:each="genre : ${genres}">
+                        <form th:action="@{|/filter/${genre.id}|}" name="filterForm" method="post">
+                        <li>
+                            <div th:switch="${genre.filterCheck}">
+                                <input th:case="true" type="checkbox" name="name" th:value="${genre.name}"
+                                       th:id="${genre.id}" th:text="${genre.name}"
+                                       onchange="this.form.submit()" checked/>
+                                <input th:case="*" type="checkbox" name="name" th:value="${genre.name}"
+                                       th:id="${genre.id}" th:text="${genre.name}"
+                                       onchange="this.form.submit()"/>
+                            </div>
+                        </li>
+                        </form>
+                    </ul>
+
                 </div>
             </div>
-        </div>
+            </div>
+        </aside>
+        <section class="cards">
+            <div class="card-grid-container">
+            <div th:each="game : ${games}">
+                <a th:href="@{|/details/${game.id}|}">
+                <div  class="game">
+                            <img th:src="@{|/games/${game.id}|}" alt="png" height="300" width="200"/>
+                        <div class="game-name">
+                            <span th:text="${game.name}" ></span>
+                        </div>
+
+                </div>
+                </a>
+            </div>
+            </div>
+        </section>
     </div>
 </div>
 
+<div th:replace="layout :: scripts"></div>
 
 
-<!--<div th:fragment="flash" th:if="${flash != null}" class="container">-->
-<!--    <i class="right material-icons" data-close="">close</i>-->
-<!--    <div th:classappend="${#strings.toLowerCase(flash.status)}" th:text="${flash.message}" class="flash"></div>-->
+<!--<div class="game-container">-->
+<!--    <div class="row">-->
+<!--        <h1 class="header" th:text="${header}">All Games</h1>-->
+<!--        <div th:each="game : ${games}" class="game">-->
+<!--            <div class="col" >-->
+
+<!--                <a th:href="@{|/details/${game.id}|}">-->
+<!--                    <img th:src="@{|/games/${game.id}|}" alt="png" height="200" width="135"/>-->
+<!--                    <div th:text="${game.name}" class="image-name">name</div>-->
+
+<!--                </a>-->
+<!--                <form th:action="@{|/games/favorite/${game.id}|}" method="post">-->
+<!--                    <div><button type="submit" th:class="(${game.favorite}? 'un' : '') + 'favorite'"-->
+<!--                    th:text="(${game.favorite}? 'Un-' : '') + 'Favorite'"></button></div>-->
+<!--                </form>-->
+
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
 <!--</div>-->
 
 

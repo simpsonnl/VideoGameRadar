@@ -19,6 +19,9 @@ public class Genre {
     @Size(min = 3, max = 25)
     private String name;
 
+    @NotNull
+    private boolean filterCheck = false;
+
     @Column
     @OneToMany(mappedBy = "genre")
     private List<Game> games = new ArrayList<>();
@@ -47,5 +50,13 @@ public class Genre {
 
     public void setGames(List<Game> games) {
         this.games = games;
+    }
+
+    public boolean isFilterCheck() {
+        return filterCheck;
+    }
+
+    public void setFilterCheck(boolean filterCheck) {
+        this.filterCheck = filterCheck;
     }
 }

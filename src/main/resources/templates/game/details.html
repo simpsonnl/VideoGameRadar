@@ -8,27 +8,56 @@
 
 
 <div th:replace="layout :: nav"></div>
+<div th:replace="layout :: flash"></div>
 
 
-
-<div class="game-container">
-    <div class="row">
-        <div class="detail-col">
-
-        <img th:src="@{|/games/${game.id}|}" alt="png" height="400" width="275"/>
+<div class="content">
+    <div class="outer-grid-container">
+        <div class="heading-query">
+            <div class="header">
+                <h1 th:text="${heading}">All Games</h1>
+            </div>
+            <hr>
         </div>
-        <div class="detail-col">
-            <div><h1 th:text="${game.name}"></h1></div>
-            <div class="game-details">Release Date</div>
-            <div class="game-details" th:text="${game.genre.name}">Genre</div>
-            <div class="game-details">Link</div>
-            <div class="button-game-details">
-                <form th:action="@{${action}}" method="post">
-                    <button class="edit-button" type="submit">Edit</button>
-                </form>
-                <form th:action="@{${delete}}" method="post">
-                    <button th:onclick="return myFunction()" type="submit" class="edit-button">Delete</button>
-                </form>
+        <div class="row">
+            <div class="detail-col-img">
+
+            <img th:src="@{|/games/${game.id}|}" alt="png" height="400" width="275"/>
+            </div>
+            <div class="detail-col">
+                <div><h2 th:text="${game.name}"></h2></div>
+                <!--switch statement to check for a null release date-->
+                <div th:switch="${game.releaseDate}" class="game-details">
+                    <span th:case="null">Release Date: Unknown</span>
+                    <span th:case="*" th:text="${'Release Date: ' + #dates.format(game.releaseDate, 'dd-MMM-yyyy')}"></span>
+                </div>
+                <div class="game-details" th:text="${'Genre: ' + game.genre.name}">Genre</div>
+
+
+                <div class="button-game-details">
+                    <div class="button-wrapper">
+                        <form th:action="@{|/games/favorite/${game.id}|}" method="post">
+                            <button type="submit" th:class="(${game.favorite}? 'un' : '') + 'favorite'"
+                            th:text="(${game.favorite}? 'Un-' : '') + 'Favorite'"></button>
+                        </form>
+                    </div>
+                    <div class="button-wrapper">
+                        <form th:action="@{${action}}" method="post">
+
+                            <button class="edit-button" type="submit" th:text="'Edit'"></button>
+
+                        </form>
+                    </div>
+                    <div class="button-wrapper">
+                        <form th:action="@{${delete}}" method="post">
+
+                            <button th:onclick="return myFunction()" type="submit" class="edit-button">Delete</button>
+
+                        </form>
+
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>
@@ -42,10 +71,7 @@ function myFunction() {
 }
 </script>
 
-<!--<div th:fragment="flash" th:if="${flash != null}" class="container">-->
-<!--    <i class="right material-icons" data-close="">close</i>-->
-<!--    <div th:classappend="${#strings.toLowerCase(flash.status)}" th:text="${flash.message}" class="flash"></div>-->
-<!--</div>-->
+<div th:replace="layout :: scripts"></div>
 
 
 
