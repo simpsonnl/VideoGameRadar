@@ -20,19 +20,10 @@ public class GameDaoImpl implements GameDao{
 
     @Override
     public List<Game> findAll() {
-        //open session
         Session session = sessionFactory.openSession();
-
-        // Create CriteriaBuilder
         CriteriaBuilder builder = session.getCriteriaBuilder();
-
-        // Create CriteriaQuery
         CriteriaQuery<Game> criteria = builder.createQuery(Game.class);
-
-        // Specify criteria root
         criteria.from(Game.class);
-
-        // Execute query
         List<Game> games = session.createQuery(criteria).getResultList();
 
         session.close();

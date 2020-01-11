@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('explore')">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+
+
+<div th:replace="layout :: nav"></div>
+<div th:replace="layout :: flash"></div>
+
+
+<div class="content">
+    <div class="outer-grid-container">
+
+        <div class="heading-query">
+        </div>
+    <div class="login-input" th:class="${param.error} ? 'login-input-error' : 'login-input'">
+        <div class="input-header">
+            <h2 id="input-header" th:text="${header}">All Games</h2>
+        </div>
+
+        <form th:action="@{/login}" method="post">
+            <div class="input"><input id="username" type="text" name="username" placeholder="Username..."/></div>
+            <div class="input"><input id="password" type="password" name="password" placeholder="Password..."/></div>
+
+            <div th:if="${param.error}" class="credentialsError">
+                <span class="credentialsErrorText">Invalid Credentials</span>
+            </div>
+            <div th:if="${param.logout}">
+                You have been logged out.
+            </div>
+
+            <div class="input"><input id="signin" type="submit" value="Sign In"/></div>
+        </form>
+
+        <hr id="login-hr"/>
+
+            <div class="createWrapper">
+                <a id="create-account" th:href="@{/create/account}">Create New Account</a>
+            </div>
+    </div>
+
+    </div>
+</div>
+
+
+
+<div th:replace="layout :: scripts"></div>
+
+</body>
+
+
+
+</html>

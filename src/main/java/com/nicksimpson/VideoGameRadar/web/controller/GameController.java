@@ -46,14 +46,13 @@ public class GameController {
         List<Genre> genres = genreService.findAll();
         List<Sort> sortOptions = sortService.findAll();
 
-
+        //resets the filters
         for (Genre genre: genres
         ) {
             genre.setFilterCheck(false);
             genreService.save(genre);
         }
 
-        //reset the search, filteredGames and favorite fields
         favorites.clear();
         search.clear();
         filteredGames.clear();
@@ -74,14 +73,14 @@ public class GameController {
         return "game/index";
     }
 
-    //Game image
+    //Retrieving game image
     @RequestMapping("/games/{gameId}")
     @ResponseBody
     public byte[] gameImgae(@PathVariable Long gameId){
         return gameService.findById(gameId).getBytes();
     }
 
-    //method for saving
+    //method for saving a game to the database
     @RequestMapping(value = "/games", method = RequestMethod.POST)
     public String addGame(Game game, @RequestParam MultipartFile file, RedirectAttributes redirectAttributes, HttpServletRequest request){
         if(game.getName().length() > 50 || game.getName().length() < 3) {
@@ -239,12 +238,12 @@ public class GameController {
         return "game/index";
     }
 
+    //toggles the favorite field for the given game
+    //returns to the page it was on
     @RequestMapping(value = "/games/favorite/{gameId}", method = RequestMethod.POST)
     public String toggleFavorite(@PathVariable Long gameId, Model model, HttpServletRequest request, RedirectAttributes redirectAttributes){
         Game game = gameService.findById(gameId);
         gameService.toggleFavorite(game);
-
-
 
         //displays the appropriate flash message for toggling as a favorite
         if(gameService.isFavorite(game)) {
@@ -259,8 +258,9 @@ public class GameController {
         return String.format("redirect:%s",request.getHeader("referer"));
     }
 
+    //sets the filters array from whatever is checked on the page
     @RequestMapping(value="/filter/{genreId}", method = RequestMethod.POST)
-    public String filterGames(Model model,@PathVariable Long genreId, @RequestParam(value="name", required = false)String[] genreArray){
+    public String filterGames(Model model, @PathVariable Long genreId, @RequestParam(value="name", required = false)String[] genreArray){
         genreService.toggleFilter(genreService.findById(genreId));
 
         //resets the filtered games field
@@ -361,6 +361,7 @@ public class GameController {
         return "game/index";
     }
 
+    //clears the filter array list
     @RequestMapping("/filters/clear")
     public String clearFilters(){
         List<Genre> genres = genreService.findAll();

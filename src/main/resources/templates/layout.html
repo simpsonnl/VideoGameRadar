@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 
 <head th:fragment="head(page_title)" lang="en">
     <meta charset="UTF-8"/>
@@ -11,7 +12,7 @@
 <!--    <link rel="stylesheet" th:href="@{/vendor/codrops/css/cs-select.css}" />-->
 <!--    <link rel="stylesheet" th:href="@{/vendor/codrops/css/cs-skin-border.css}" />-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-    <link rel="stylesheet" th:href="@{../app.css}" />
+    <link rel="stylesheet" th:href="@{../gameapp.css}" />
 
     <title>Game Radar</title>
 </head>
@@ -23,26 +24,48 @@
         <div class="contain">
             <h1><a th:href="@{/}" class="logo">Game Radar</a></h1>
             <!--            <a href="#" data-activates="mobile-nav" class="button-collapse right"><i class="material-icons">menu</i></a>-->
-            <ul class="menu-list">
-                <li>
-                    <div class="wrap">
-                        <div class="search">
-                            <form id="searchForm" th:action="@{/search}">
-                            <div class="searchDiv">
+
+                <div class="searchDiv">
+
+                        <form id="searchForm" th:action="@{/search}">
+                            <div id="search-box-and-button" class="search-box-and-button">
                                 <input name="q" required="required" autocomplete="true" type="text" class="searchTerm" placeholder="Search Games...">
-                           <div><button type="submit" class="searchButton"/>
-                            <i class="fa fa-search"></i> </div>
-                            </button>
+                                <div class="search-button">
+                                    <button type="submit" class="searchButton"/>
+                                    <i class="fa fa-search"></i>
+                                </div>
                             </div>
-                            </form>
-                        </div>
-                    </div>
-                </li>
+                        </form>
+                </div>
+
+
+            <ul class="menu-list">
                 <li class="active"><a th:href="@{/}">Home</a></li>
                 <li ><a th:href="@{/upload}">Upload</a></li>
 <!--                <li ><a th:href="@{/genres}">Genres</a></li>-->
-                <li id="fav"><a th:href="@{/favorites}">Favorites</a></li>
+<!--                <li id="fav"><a th:href="@{/favorites}">Favorites</a></li>-->
+                <li>
+                    <th:block th:switch="${session.currentUser}">
+                        <div th:case="null">
+                            <a th:href="@{/login}">
+                                <span>Login</span>
+                            </a>
+                        </div>
+                        <div th:case="*" class="dropdown" id="dropdown" >
+                            <button onclick="myFunction()" class="dropbtn" th:text="${session.currentUser}">Login</button>
+                            <div id="myDropdown" class="dropdown-content">
+<!--                                <a class="drp-a" href="#home">Account</a>-->
+<!--                                <a class="drp-a" th:href="@{/favorites}">Favorites</a>-->
+                                <a class="drp-a" th:href="@{/logout}">Logout</a>
+                            </div>
+                        </div>
+                    </th:block>
+                </li>
             </ul>
+
+
+
+
             <!--            <ul id="mobile-nav" class="side-nav">-->
             <!--                <li th:classappend="${#httpServletRequest.servletPath.equals('/upload') ? 'active' : ''}"><a th:href="@{/upload}">Upload</a></li>-->
             <!--                <li th:classappend="${#httpServletRequest.servletPath.equals('/') ? 'active' : ''}"><a th:href="@{/}">Explore</a></li>-->
@@ -67,7 +90,11 @@
 <!--    <script th:src="@{/vendor/materialize/js/materialize.js}"></script>-->
 <!--    <script th:src="@{/vendor/codrops/js/classie.js}"></script>-->
 <!--    <script th:src="@{/vendor/codrops/js/selectFx.js}"></script>-->
-    <script th:src="@{/gameapp.js}"></script>
+    <script th:src="@{/app.js}">
+
+
+
+    </script>
 </div>
 
 </body>

@@ -1,5 +1,7 @@
 package com.nicksimpson.VideoGameRadar.config;
 
+import com.nicksimpson.VideoGameRadar.model.User;
+import com.nicksimpson.VideoGameRadar.model.UserRole;
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +27,9 @@ public class DataConfig {
         sessionFactory.setConfigLocation(config);
         sessionFactory.setPackagesToScan(env.getProperty("gameradar.entity.package"));
         sessionFactory.setDataSource(dataSource());
+
+        sessionFactory.setAnnotatedClasses(User.class, UserRole.class);
+
         return sessionFactory;
     }
 

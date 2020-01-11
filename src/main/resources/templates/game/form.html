@@ -20,23 +20,28 @@
             <div class="upload-form">
                 <form class="uploadform" th:object="${game}" th:action="@{${action}}" method="post" enctype="multipart/form-data">
                     <input type="hidden" th:field="*{id}"/>
-                    <label for="name">Name</label>
+                    <label for="name" >Name: </label>
+
                     <input th:field="*{name}" id="name" type="text" placeholder="Name..."/>
                     <div class="file-wrapper">
 
-                        <span class="placeholder" data-placeholder="Choose an image...">Choose an image...</span>
+                        <span class="placeholder" data-placeholder="Choose an image..." >Choose an image: </span>
+
                         <input class="input" type="file" id="file" name="file" th:data-placeholder="*{bytes}" />
     <!--                    <label for="file" class="button">Browse</label>-->
                     </div>
                     <div>
-                        <select th:field="*{genre.id}" class="input">
-                            <option value="" disabled="disabled" selected="selected">Select a genre</option>
+                        <label for="genre" >Genre: </label>
+
+                        <select id="genre" th:field="*{genre.id}" class="genre-input">
+                            <option  value="" disabled="disabled" selected="selected">Select a genre</option>
                             <option th:each="genre : ${genres}" th:value="${genre.id}" th:text="${genre.name}">Action</option>
                         </select>
                     </div>
 
                     <div>
-                        <label for="releaseDate">Release Date:</label>
+                        <label for="releaseDate" >Release Date:</label>
+
                         <input type="date" class="input" name="releasedate" th:field="*{releaseDate}" id="releaseDate"/>
                     </div>
                     <div>

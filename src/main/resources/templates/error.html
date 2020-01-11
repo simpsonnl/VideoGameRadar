@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout :: head('explore')">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Not Found!</title>
 </head>
 <body>
 
+
+
+<div th:replace="layout :: nav"></div>
+
+<div class="error-content">
+    <h1 style="text-align:center; color:skyblue;">404</h1>
+    <p style="text-align:center;">Oops! Something is wrong.</p>
+    <a style="padding-left:23px;" class="button" th:href="@{/}" >Go back to the home page.</a>
+</div>
 </body>
 </html>
