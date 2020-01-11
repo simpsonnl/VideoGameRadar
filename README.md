@@ -6,4 +6,4 @@ http://github.com - automatic!
 
 
 ![Image of HomePage]
-(https://github.com/simpsonnl/VideoGameRadar/blob/master/Images/homepage.png)
+(/Images/homepage.png)
