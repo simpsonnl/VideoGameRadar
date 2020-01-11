@@ -5,3 +5,5 @@ http://github.com - automatic![GitHub](http://github.com)
 
 
 ![Image of HomePage](/Images/homepage.png)
+
+![Image of HomePage](/Images/loginPage.png)
