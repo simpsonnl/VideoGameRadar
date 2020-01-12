@@ -121,7 +121,7 @@ public class GameController {
 
         gameService.save(game, file);
 
-        //TODO: add flash attributes to site
+        
         redirectAttributes.addFlashAttribute("flash",new FlashMessage("Game Updated Successfully!", FlashMessage.Status.SUCCESS));
 
         return String.format("redirect:/details/%s",game.getId());
